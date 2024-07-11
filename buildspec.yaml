@@ -11,9 +11,10 @@ phases:
   build:
     commands:
       - echo Build the project
-      - dotnet build --configuration Release --no-restore
+      - dotnet build
       - echo Run tests
-      - dotnet test --no-restore --verbosity normal
+      - dotnet test
+
 artifacts:
   files:
     - '**/*'
