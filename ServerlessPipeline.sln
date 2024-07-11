@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerlessPipeline", "ServerlessPipeline\ServerlessPipeline.csproj", "{0038C627-F88D-48F2-B46B-E2332F7D9C36}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerlessPipeline.Tests", "ServerlessPipeline.Tests\ServerlessPipeline.Tests.csproj", "{2966D9E3-E163-4F34-B632-BDB220FB6E8F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0038C627-F88D-48F2-B46B-E2332F7D9C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0038C627-F88D-48F2-B46B-E2332F7D9C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0038C627-F88D-48F2-B46B-E2332F7D9C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0038C627-F88D-48F2-B46B-E2332F7D9C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2966D9E3-E163-4F34-B632-BDB220FB6E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2966D9E3-E163-4F34-B632-BDB220FB6E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2966D9E3-E163-4F34-B632-BDB220FB6E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2966D9E3-E163-4F34-B632-BDB220FB6E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D942957-F6BD-4F39-86C1-D57D27D9EC42}
+	EndGlobalSection
+EndGlobal
