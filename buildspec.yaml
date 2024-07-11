@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 6.0
+  pre_build:
+    commands:
+      - echo Restore dependencies
+      - dotnet restore
+  build:
+    commands:
+      - echo Build the project
+      - dotnet build --configuration Release --no-restore
+      - echo Run tests
+      - dotnet test --no-restore --verbosity normal
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes
