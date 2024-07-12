@@ -3,7 +3,7 @@ name: CI/CD Pipeline for AWS Lambda
 on:
   push:
     branches:
-      - master
+      - master  # Runs on every branch push
   pull_request:
     branches:
       - master
@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0'  # specify the .NET version you're using
+        dotnet-version: '7.x'  # specify the .NET version you're using
 
     - name: Install dependencies
       run: dotnet restore
@@ -28,7 +28,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --configuration Release --no-build --verbosity normal
 
   deploy:
     runs-on: ubuntu-latest
