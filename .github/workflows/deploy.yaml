@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the repository
+      - name: Check code
         uses: actions/checkout@v2
 
       - name: Set up .NET Core
@@ -23,7 +23,7 @@ jobs:
         run: dotnet restore
 
       - name: Build the project
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release
 
       - name: Run tests
         run: dotnet test --no-restore --verbosity normal
@@ -38,4 +38,4 @@ jobs:
       - name: Deploy to AWS Lambda
         run: |
           dotnet lambda package --output-package build/ServerlessPipeline.zip
-          aws lambda update-function-code --function-name ServerlessPipelineFunction --zip-file fileb://build/ServerlessPipeline.zip
+          aws lambda update-function-code --function-name toUpper --zip-file fileb://build/ServerlessPipeline.zip
