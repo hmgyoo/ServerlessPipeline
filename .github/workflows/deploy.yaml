@@ -1,64 +1,47 @@
-name: CI/CD Pipeline for AWS Lambda
+name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - master  # Runs on every branch push
+    branches: [master, main]
   pull_request:
-    branches:
-      - master
+    branches: [master, main]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Check out the repository
+        uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '7.x'  # specify the .NET version you're using
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.0'
 
-    - name: Install dependencies
-      run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Build project
-      run: dotnet build --configuration Release --no-restore
+      - name: Build the project
+        run: dotnet build --configuration Release --no-restore
 
-    - name: Run tests
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      - name: Run tests
+        run: dotnet test --no-restore --verbosity normal
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
+      - name: Install AWS CLI
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-1  # Change this to your AWS region
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0'  # specify the .NET version you're using
-
-    - name: Install dependencies
-      run: dotnet restore
-
-    - name: Build project
-      run: dotnet build --configuration Release --no-restore
-
-    - name: Install Amazon.Lambda.Tools
-      run: dotnet tool install -g Amazon.Lambda.Tools
-
-    - name: Package Lambda function
-      run: |
-        dotnet lambda package --configuration Release --output-package ./package.zip
-
-    - name: Deploy Lambda function
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        aws lambda update-function-code --function-name toUpper --zip-file fileb://package.zip
+      - name: Deploy to AWS Lambda
+        run: |
+          dotnet lambda package --output-package build/ServerlessPipeline.zip
+          aws lambda update-function-code --function-name ServerlessPipelineFunction --zip-file fileb://build/ServerlessPipeline.zip
