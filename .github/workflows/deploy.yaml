@@ -49,7 +49,12 @@ jobs:
     - name: Build project
       run: dotnet build --configuration Release --no-restore
 
+    - name: Install Amazon.Lambda.Tools
+      run: dotnet tool install -g Amazon.Lambda.Tools
+
     - name: Package Lambda function
+      env:
+        PATH: ${{ env.PATH }}:/home/runner/.dotnet/tools
       run: |
         dotnet lambda package --configuration Release --output-package ./package.zip
 
